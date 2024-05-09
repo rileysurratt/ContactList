@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ContactRow from "./ContactRow";
 
 const dummyContacts = [
@@ -22,6 +22,20 @@ const dummyContacts = [
 
 export default function ContactList() {
     const [contacts, setContacts] = useState(dummyContacts);
+    const API_URL = "https://jsonplace-univclone.herokuapp.com/users"
+    useEffect(() => {
+        async function fetchContacts() {
+            try {
+                const response = await fetch(API_URL);
+                const result = await response.json();
+                // setContacts function to reset the contacts, recall function after define it fetchContacts()
+                setContacts(result)
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchContacts()
+    }, []);
     console.log("Contacts", contacts)
     return (
         <table>

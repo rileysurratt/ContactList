@@ -20,9 +20,9 @@ const dummyContacts = [
     },
 ];
 
-export default function ContactList() {
+export default function ContactList({ setSelectedContactId }) {
     const [contacts, setContacts] = useState(dummyContacts);
-    const API_URL = "https://jsonplace-univclone.herokuapp.com/users"
+    const API_URL = "https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users/"
     useEffect(() => {
         async function fetchContacts() {
             try {
@@ -36,7 +36,6 @@ export default function ContactList() {
         }
         fetchContacts()
     }, []);
-    console.log("Contacts", contacts)
     return (
         <table>
             <thead>
@@ -51,9 +50,9 @@ export default function ContactList() {
                     <td>Phone</td>
                 </tr>
                 {contacts.map((contact) => {
-                    return <ContactRow key={contact.id} contact={contact} />
+                    // deconstructing one level down into ContactRow component 
+                    return <ContactRow key={contact.id} contact={contact} setSelectedContactId={setSelectedContactId} />
                 })
-
                 }
             </tbody>
         </table>
